@@ -21,7 +21,7 @@ const CatBreedSelect: FC<Props> = ({ catBreeds, onChangeFn }) => {
         className="breed-select__form-select"
         onChange={onChangeFn}
       >
-        <option>-- nothing selected --</option>
+        <option value="">-- nothing selected --</option>
         {catBreeds.map((breed) => (
           <option key={breed.id} value={breed.id}>
             {breed.name}
