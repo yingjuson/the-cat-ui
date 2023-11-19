@@ -13,3 +13,12 @@ export const getBreeds = (params?: Param): Partial<AxiosRequestConfig> => ({
   method: 'GET',
   params,
 });
+
+export const getCatImage = (params?: Param): Partial<AxiosRequestConfig> => ({
+  url: `${API_BASE_URI}/images/search`,
+  method: 'GET',
+  params: {
+    ...params,
+    breed_id: params?.id,
+  },
+});

@@ -1,0 +1,14 @@
+.cat-card {
+  height: 18em;
+}
+
+.cat-card__img {
+  object-fit: cover;
+  height: 70%;
+}
+
+.cat-card__body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

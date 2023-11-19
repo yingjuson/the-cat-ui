@@ -1,0 +1,8 @@
+.cat-list-container {
+  display: grid;
+  width: 100%;
+  grid-gap: 10px;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
+}

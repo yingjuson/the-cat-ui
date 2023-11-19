@@ -1,4 +1,9 @@
-/* import bootstrap to set changes */
+// prerequisites
 @import '../node_modules/bootstrap/scss/bootstrap';
-
 @import 'base';
+
+// pages
+@import './pages/home.scss';
+
+// components
+@import './components/catCard.scss';

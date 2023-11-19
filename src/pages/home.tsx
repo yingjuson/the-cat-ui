@@ -1,20 +1,14 @@
 import { FC, ChangeEvent, useEffect, useState } from 'react';
-import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import { getBreeds } from '../services/catBreedService';
+import Container from 'react-bootstrap/Container';
+import { getBreeds, getCatImage } from '../services/catBreedService';
 import axios from 'axios';
-
-interface CatBreed {
-  id: string;
-  name: string;
-  image: string;
-  origin: string;
-  description: string;
-  temperament: string;
-}
+import { CatBreed, CatImage } from '../types/cat.types';
+import CatCard from '../components/CatCard';
 
 const Home: FC = () => {
   const [catBreeds, setCatBreeds] = useState<CatBreed[]>([]);
+  const [catImages, setCatImages] = useState<CatImage[]>([]);
   const [selectedBreed, setSelectedBreed] = useState<string>('');
 
   useEffect(() => {
@@ -25,7 +19,14 @@ const Home: FC = () => {
     })();
   }, []);
 
-  console.log({ catBreeds });
+  useEffect(() => {
+    if (selectedBreed) {
+      axios(getCatImage({ id: selectedBreed, limit: 20, page: 1 }))
+        .then(({ data }) => setCatImages(data))
+        .catch((error) => console.log({ error }));
+    }
+  }, [selectedBreed]);
+
   return (
     <Container className="mt-2">
       <h1>Cat Browser</h1>
@@ -49,6 +50,11 @@ const Home: FC = () => {
           </Form.Select>
         </Form.Group>
       </Form>
+      <div className="cat-list-container">
+        {catImages.map((catImage) => (
+          <CatCard key={catImage.id} catImage={catImage} />
+        ))}
+      </div>
     </Container>
   );
 };
