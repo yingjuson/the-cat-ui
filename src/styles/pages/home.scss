@@ -1,10 +1,6 @@
 .home {
   margin-top: 2em;
 
-  &__cat-breed-selector {
-    width: 15em;
-  }
-
   &__cat-cards-container {
     display: grid;
     width: 100%;
@@ -12,5 +8,9 @@
     margin-top: 2em;
     margin-bottom: 2em;
     grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
+  }
+
+  .breed-select {
+    margin-top: 2em;
   }
 }

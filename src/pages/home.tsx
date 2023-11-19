@@ -1,11 +1,11 @@
 import { FC, ChangeEvent, useEffect, useState } from 'react';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { getBreeds, getCatImage } from '../services/catBreedService';
-import axios from 'axios';
 import { CatBreed, CatImage } from '../types/cat.types';
+import axios from 'axios';
 import CatCard from '../components/CatCard';
+import Select from '../components/CatBreedSelect';
 import { useCatBreedContext } from '../context/catBreedContext';
 
 const Home: FC = () => {
@@ -69,6 +69,16 @@ const Home: FC = () => {
     setPage((prev) => prev + 1);
   };
 
+  /**
+   * handle BreedSelect's onchange event
+   * @param e
+   */
+  const handleBreedSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedBreed(e.target.value);
+    setShowLoadMoreButton(false);
+    setCatImages([]);
+  };
+
   useEffect(() => {
     (() => {
       axios(getBreeds())
@@ -90,29 +100,7 @@ const Home: FC = () => {
   return (
     <Container className="home">
       <h1>Cat Browser</h1>
-      <Form>
-        <Form.Group controlId="form-cat-breed">
-          <Form.Label>Breed</Form.Label>
-          <Form.Select
-            aria-label="select breed"
-            size="lg"
-            value={selectedBreed}
-            disabled={false}
-            className="home__cat-breed-selector"
-            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-              setSelectedBreed(e.target.value);
-              setShowLoadMoreButton(false);
-              setCatImages([]);
-            }}
-          >
-            {catBreeds.map((breed) => (
-              <option key={breed.id} value={breed.id}>
-                {breed.name}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.Group>
-      </Form>
+      <Select catBreeds={catBreeds} onChangeFn={handleBreedSelect} />
       <div className="home__cat-cards-container">
         {catImages.map((catImage) => (
           <CatCard key={catImage.id} catImage={catImage} />
