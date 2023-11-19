@@ -1,5 +1,4 @@
 import { FC, ChangeEvent, useEffect, useState } from 'react';
-import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { getBreeds } from '../requests/catRequests';
@@ -9,18 +8,19 @@ import CatCard from '../components/CatCard';
 import Select from '../components/CatBreedSelect';
 import { useCatBreedContext } from '../context/catBreedContext';
 import useCatImages from '../hooks/useCatImages';
+import { useNotificationContext } from '../context/notificationContext';
+import { DEFAULT_GET_ERROR_MESSAGE } from '../constants/notification.constants';
 
 const Home: FC = () => {
   const [catBreeds, setCatBreeds] = useState<CatBreed[]>([]);
   const { selectedBreed, setSelectedBreed } = useCatBreedContext();
+  const { fireNotification } = useNotificationContext();
 
   const {
     catImages,
-    showError,
     prefetchedImages,
     showLoadMoreButton,
     setPage,
-    setShowError,
     setCatImages,
     setShowLoadMoreButton,
   } = useCatImages(selectedBreed);
@@ -48,7 +48,12 @@ const Home: FC = () => {
     (() => {
       axios(getBreeds())
         .then(({ data }) => setCatBreeds(data))
-        .catch(() => setShowError(true));
+        .catch(() => {
+          fireNotification({
+            message: DEFAULT_GET_ERROR_MESSAGE,
+            type: 'danger',
+          });
+        });
     })();
   }, []); // eslint-disable-line
 
@@ -64,14 +69,6 @@ const Home: FC = () => {
       {showLoadMoreButton && (
         <Button onClick={concatPrefetchedImages}>Load more</Button>
       )}
-      <Alert
-        variant="danger"
-        show={showError}
-        dismissible
-        onClose={() => setShowError(false)}
-      >
-        Apologies but we could not load new cats for you at this time! Miau!
-      </Alert>
     </Container>
   );
 };

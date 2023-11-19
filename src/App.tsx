@@ -3,14 +3,19 @@ import Home from './pages/Home';
 import './styles/main.scss';
 import Cat from './pages/Cat';
 import { CatBreedContextProvider } from './context/catBreedContext';
+import { NotificationContextProvider } from './context/notificationContext';
+import Notification from './components/Notification';
 
 const App = () => (
-  <CatBreedContextProvider>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/:id" element={<Cat />} />
-    </Routes>
-  </CatBreedContextProvider>
+  <NotificationContextProvider>
+    <CatBreedContextProvider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/:id" element={<Cat />} />
+      </Routes>
+      <Notification />
+    </CatBreedContextProvider>
+  </NotificationContextProvider>
 );
 
 const WrappedApp = () => (

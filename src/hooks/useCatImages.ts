@@ -2,18 +2,24 @@ import { useState, useEffect } from 'react';
 import { getCatImage } from '../requests/catRequests';
 import { CatImage } from '../types/cat.types';
 import axios from 'axios';
+import { useNotificationContext } from '../context/notificationContext';
+import { DEFAULT_GET_ERROR_MESSAGE } from '../constants/notification.constants';
 
 const useCatImages = (selectedBreed: string) => {
   const [page, setPage] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-  const [showError, setShowError] = useState<boolean>(false);
   const [catImages, setCatImages] = useState<CatImage[]>([]);
   const [prefetchedImages, setPrefetchedImages] = useState<CatImage[]>([]);
   const [showLoadMoreButton, setShowLoadMoreButton] = useState<boolean>(false);
 
+  const { fireNotification } = useNotificationContext();
+
   const handleFetchError = () => {
-    setShowError(true);
     setLoading(false);
+    fireNotification({
+      message: DEFAULT_GET_ERROR_MESSAGE,
+      type: 'danger',
+    });
   };
 
   /**
@@ -74,8 +80,6 @@ const useCatImages = (selectedBreed: string) => {
   return {
     page,
     setPage,
-    showError,
-    setShowError,
     prefetchedImages,
     showLoadMoreButton,
     setShowLoadMoreButton,

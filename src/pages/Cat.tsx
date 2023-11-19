@@ -7,10 +7,13 @@ import axios from 'axios';
 import { getCatBreedInfoByImageId } from '../requests/catRequests';
 import { useParams, useNavigate } from 'react-router-dom';
 import { CatBreed } from '../types/cat.types';
+import { useNotificationContext } from '../context/notificationContext';
+import { DEFAULT_GET_ERROR_MESSAGE } from '../constants/notification.constants';
 
 const Cat: FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { fireNotification } = useNotificationContext();
 
   const [catInfo, setCatInfo] = useState<CatBreed | null>(null);
 
@@ -31,7 +34,12 @@ const Cat: FC = () => {
               temperament: breedInfo.temperament,
             });
           })
-          .catch((error) => console.log({ error }));
+          .catch(() =>
+            fireNotification({
+              message: DEFAULT_GET_ERROR_MESSAGE,
+              type: 'danger',
+            })
+          );
       }
     })();
   }, []); // eslint-disable-line
