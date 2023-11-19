@@ -5,7 +5,6 @@ const API_BASE_URI = import.meta.env.VITE_API_BASE_URI;
 interface Param {
   id?: string;
   page?: number;
-  limit?: number;
 }
 
 export const getBreeds = (params?: Param): Partial<AxiosRequestConfig> => ({
@@ -18,7 +17,8 @@ export const getCatImage = (params?: Param): Partial<AxiosRequestConfig> => ({
   url: `${API_BASE_URI}/images/search`,
   method: 'GET',
   params: {
-    ...params,
-    breed_id: params?.id,
+    breed_ids: params?.id,
+    page: params?.page,
+    limit: 10,
   },
 });

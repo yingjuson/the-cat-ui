@@ -1,5 +1,6 @@
 import { FC, ChangeEvent, useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { getBreeds, getCatImage } from '../services/catBreedService';
 import axios from 'axios';
@@ -7,9 +8,65 @@ import { CatBreed, CatImage } from '../types/cat.types';
 import CatCard from '../components/CatCard';
 
 const Home: FC = () => {
+  const [page, setPage] = useState<number>(0);
   const [catBreeds, setCatBreeds] = useState<CatBreed[]>([]);
   const [catImages, setCatImages] = useState<CatImage[]>([]);
   const [selectedBreed, setSelectedBreed] = useState<string>('');
+  const [prefetchedImages, setPrefetchedImages] = useState<CatImage[]>([]);
+  const [showLoadMoreButton, setShowLoadMoreButton] = useState<boolean>(false);
+
+  /**
+   * prefetch cat images of next page
+   * @param currentCatImages
+   */
+  const prefetchImages = (currentCatImages: CatImage[]) => {
+    axios(getCatImage({ id: selectedBreed, page: page + 1 }))
+      .then(({ data }) => {
+        // de-dupe prefetchedImages
+        const imageIds = currentCatImages.map(({ id }: CatImage) => id);
+        const filteredPrefetchedImages = data.filter(
+          ({ id }: CatImage) => !imageIds.includes(id)
+        );
+
+        if (filteredPrefetchedImages.length > 0) {
+          setPrefetchedImages(filteredPrefetchedImages);
+        } else {
+          setShowLoadMoreButton(false);
+        }
+      })
+      .catch((error) => console.log({ error }));
+  };
+
+  /**
+   * handle response data and determine if images should be prefetched
+   * @param responseData
+   */
+  const handleImages = (responseData: CatImage[]) => {
+    setCatImages(responseData);
+
+    if (responseData.length === 10) {
+      setShowLoadMoreButton(true);
+      prefetchImages(responseData);
+    }
+  };
+
+  /**
+   * fetch cat images of selected breed from API
+   */
+  const getCatImages = () => {
+    axios(getCatImage({ id: selectedBreed, page }))
+      .then(({ data }) => handleImages(data))
+      .catch((error) => console.log({ error }));
+  };
+
+  /**
+   * concatenate prefetched images to current image list
+   */
+  const concatPrefetchedImages = () => {
+    const combined = [...catImages, ...prefetchedImages];
+    setCatImages(combined);
+    setPage((prev) => prev + 1);
+  };
 
   useEffect(() => {
     (() => {
@@ -21,11 +78,13 @@ const Home: FC = () => {
 
   useEffect(() => {
     if (selectedBreed) {
-      axios(getCatImage({ id: selectedBreed, limit: 20, page: 1 }))
-        .then(({ data }) => setCatImages(data))
-        .catch((error) => console.log({ error }));
+      getCatImages();
     }
-  }, [selectedBreed]);
+  }, [selectedBreed]); // eslint-disable-line
+
+  useEffect(() => {
+    prefetchImages(catImages);
+  }, [page]); // eslint-disable-line
 
   return (
     <Container className="home">
@@ -39,9 +98,11 @@ const Home: FC = () => {
             value={selectedBreed}
             disabled={false}
             className="home__cat-breed-selector"
-            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-              setSelectedBreed(e.target.value)
-            }
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+              setSelectedBreed(e.target.value);
+              setShowLoadMoreButton(false);
+              setCatImages([]);
+            }}
           >
             {catBreeds.map((breed) => (
               <option key={breed.id} value={breed.id}>
@@ -56,6 +117,9 @@ const Home: FC = () => {
           <CatCard key={catImage.id} catImage={catImage} />
         ))}
       </div>
+      {showLoadMoreButton && (
+        <Button onClick={concatPrefetchedImages}>Load more</Button>
+      )}
     </Container>
   );
 };
