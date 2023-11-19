@@ -22,3 +22,10 @@ export const getCatImage = (params?: Param): Partial<AxiosRequestConfig> => ({
     limit: 10,
   },
 });
+
+export const getCatBreedInfoByImageId = (
+  catImageId: string
+): Partial<AxiosRequestConfig> => ({
+  url: `${API_BASE_URI}/images/${catImageId}`,
+  method: 'GET',
+});

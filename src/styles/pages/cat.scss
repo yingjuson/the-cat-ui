@@ -1,0 +1,52 @@
+.cat {
+  margin-top: 2em;
+
+  &__content {
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+  }
+
+  .card {
+    height: 90vh;
+    width: 70vh;
+
+    &-img-top {
+      height: 80%;
+      object-fit: cover;
+    }
+
+    &__name {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1em;
+      margin-bottom: 0.75em;
+    }
+
+    &__title {
+      font-size: 2em;
+      margin: 0;
+    }
+
+    &__origin {
+      display: flex;
+      align-items: center;
+      font-size: 1.1em;
+
+      > img {
+        height: 1.5em;
+        margin-left: 0.5em;
+      }
+    }
+
+    &__temperament {
+      font-size: 1em;
+      font-weight: 600;
+    }
+
+    &__description {
+      font-size: 1.2em;
+    }
+  }
+}

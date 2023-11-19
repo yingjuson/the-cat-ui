@@ -12,4 +12,5 @@ export interface CatBreed {
   origin: string;
   description: string;
   temperament: string;
+  countryCode?: string;
 }
