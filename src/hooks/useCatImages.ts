@@ -7,7 +7,6 @@ import useNotificationContext from './useNotificationContext';
 
 const useCatImages = (selectedBreed: string) => {
   const [page, setPage] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(true);
   const [catImages, setCatImages] = useState<CatImage[]>([]);
   const [prefetchedImages, setPrefetchedImages] = useState<CatImage[]>([]);
   const [showLoadMoreButton, setShowLoadMoreButton] = useState<boolean>(false);
@@ -15,7 +14,6 @@ const useCatImages = (selectedBreed: string) => {
   const { fireNotification } = useNotificationContext();
 
   const handleFetchError = () => {
-    setLoading(false);
     fireNotification({
       message: DEFAULT_GET_ERROR_MESSAGE,
       type: 'danger',
@@ -40,7 +38,6 @@ const useCatImages = (selectedBreed: string) => {
         } else {
           setShowLoadMoreButton(false);
         }
-        setLoading(false);
       })
       .catch(() => handleFetchError());
   };
@@ -84,7 +81,6 @@ const useCatImages = (selectedBreed: string) => {
     showLoadMoreButton,
     setShowLoadMoreButton,
     catImages,
-    loading,
     setCatImages,
   };
 };

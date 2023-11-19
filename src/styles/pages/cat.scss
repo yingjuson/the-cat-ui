@@ -6,6 +6,11 @@
     display: flex;
     justify-content: center;
     margin-top: 1em;
+
+    .spinner-border {
+      height: 5em;
+      width: 5em;
+    }
   }
 
   .card {
