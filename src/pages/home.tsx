@@ -6,12 +6,13 @@ import { getBreeds, getCatImage } from '../services/catBreedService';
 import axios from 'axios';
 import { CatBreed, CatImage } from '../types/cat.types';
 import CatCard from '../components/CatCard';
+import { useCatBreedContext } from '../context/catBreedContext';
 
 const Home: FC = () => {
+  const { selectedBreed, setSelectedBreed } = useCatBreedContext();
   const [page, setPage] = useState<number>(0);
   const [catBreeds, setCatBreeds] = useState<CatBreed[]>([]);
   const [catImages, setCatImages] = useState<CatImage[]>([]);
-  const [selectedBreed, setSelectedBreed] = useState<string>('');
   const [prefetchedImages, setPrefetchedImages] = useState<CatImage[]>([]);
   const [showLoadMoreButton, setShowLoadMoreButton] = useState<boolean>(false);
 
