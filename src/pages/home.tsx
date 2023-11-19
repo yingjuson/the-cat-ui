@@ -28,7 +28,7 @@ const Home: FC = () => {
   }, [selectedBreed]);
 
   return (
-    <Container className="mt-2">
+    <Container className="home">
       <h1>Cat Browser</h1>
       <Form>
         <Form.Group controlId="form-cat-breed">
@@ -38,6 +38,7 @@ const Home: FC = () => {
             size="lg"
             value={selectedBreed}
             disabled={false}
+            className="home__cat-breed-selector"
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
               setSelectedBreed(e.target.value)
             }
@@ -50,7 +51,7 @@ const Home: FC = () => {
           </Form.Select>
         </Form.Group>
       </Form>
-      <div className="cat-list-container">
+      <div className="home__cat-cards-container">
         {catImages.map((catImage) => (
           <CatCard key={catImage.id} catImage={catImage} />
         ))}

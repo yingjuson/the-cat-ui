@@ -1,8 +1,16 @@
-.cat-list-container {
-  display: grid;
-  width: 100%;
-  grid-gap: 10px;
+.home {
   margin-top: 2em;
-  margin-bottom: 2em;
-  grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
+
+  &__cat-breed-selector {
+    width: 15em;
+  }
+
+  &__cat-cards-container {
+    display: grid;
+    width: 100%;
+    grid-gap: 10px;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
+  }
 }
