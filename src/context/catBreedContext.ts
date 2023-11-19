@@ -2,7 +2,6 @@ import {
   createContext,
   createElement,
   useState,
-  useContext,
   Dispatch,
   SetStateAction,
 } from 'react';
@@ -16,7 +15,7 @@ interface CatBreedContextType {
   setSelectedBreed: Dispatch<SetStateAction<string>>;
 }
 
-const CatBreedContext = createContext<CatBreedContextType | null>(null);
+export const CatBreedContext = createContext<CatBreedContextType | null>(null);
 
 export const CatBreedContextProvider = ({ children }: Props) => {
   const [selectedBreed, setSelectedBreed] = useState<string>('');
@@ -31,14 +30,4 @@ export const CatBreedContextProvider = ({ children }: Props) => {
     },
     children
   );
-};
-
-export const useCatBreedContext = () => {
-  const context = useContext(CatBreedContext);
-
-  if (!context) {
-    throw new Error('CatBreedContext must be initialized first');
-  }
-
-  return context;
 };

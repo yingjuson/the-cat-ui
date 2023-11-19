@@ -1,7 +1,7 @@
 import { FC, ChangeEvent } from 'react';
 import Form from 'react-bootstrap/Form';
 import { CatBreed } from '../types/cat.types';
-import { useCatBreedContext } from '../context/catBreedContext';
+import useCatBreedContext from '../hooks/useCatBreedContext';
 
 interface Props {
   catBreeds: CatBreed[];

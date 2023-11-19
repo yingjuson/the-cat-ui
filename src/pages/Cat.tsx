@@ -7,8 +7,8 @@ import axios from 'axios';
 import { getCatBreedInfoByImageId } from '../requests/catRequests';
 import { useParams, useNavigate } from 'react-router-dom';
 import { CatBreed } from '../types/cat.types';
-import { useNotificationContext } from '../context/notificationContext';
 import { DEFAULT_GET_ERROR_MESSAGE } from '../constants/notification.constants';
+import useNotificationContext from '../hooks/useNotificationContext';
 
 const Cat: FC = () => {
   const { id } = useParams();

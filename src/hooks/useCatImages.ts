@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { getCatImage } from '../requests/catRequests';
 import { CatImage } from '../types/cat.types';
 import axios from 'axios';
-import { useNotificationContext } from '../context/notificationContext';
 import { DEFAULT_GET_ERROR_MESSAGE } from '../constants/notification.constants';
+import useNotificationContext from './useNotificationContext';
 
 const useCatImages = (selectedBreed: string) => {
   const [page, setPage] = useState<number>(0);

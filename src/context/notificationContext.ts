@@ -1,10 +1,4 @@
-import {
-  createContext,
-  createElement,
-  useState,
-  useContext,
-  useCallback,
-} from 'react';
+import { createContext, createElement, useState, useCallback } from 'react';
 
 interface Props {
   children: React.ReactNode;
@@ -21,7 +15,7 @@ interface NotificationContextType {
   removeNotification: () => void;
 }
 
-const NotificationContext = createContext<NotificationContextType>({
+export const NotificationContext = createContext<NotificationContextType>({
   notification: null,
   fireNotification: () => {},
   removeNotification: () => {},
@@ -45,14 +39,4 @@ export const NotificationContextProvider = ({ children }: Props) => {
     },
     children
   );
-};
-
-export const useNotificationContext = () => {
-  const context = useContext(NotificationContext);
-
-  if (!context) {
-    throw new Error('NotificationContext must be initialized first');
-  }
-
-  return context;
 };

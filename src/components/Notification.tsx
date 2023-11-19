@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Alert } from 'react-bootstrap';
-import { useNotificationContext } from '../context/notificationContext';
+import useNotificationContext from '../hooks/useNotificationContext';
 
 const Notification: FC = () => {
   const { notification, removeNotification } = useNotificationContext();

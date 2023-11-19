@@ -6,10 +6,10 @@ import { CatBreed } from '../types/cat.types';
 import axios from 'axios';
 import CatCard from '../components/CatCard';
 import Select from '../components/CatBreedSelect';
-import { useCatBreedContext } from '../context/catBreedContext';
 import useCatImages from '../hooks/useCatImages';
-import { useNotificationContext } from '../context/notificationContext';
 import { DEFAULT_GET_ERROR_MESSAGE } from '../constants/notification.constants';
+import useNotificationContext from '../hooks/useNotificationContext';
+import useCatBreedContext from '../hooks/useCatBreedContext';
 
 const Home: FC = () => {
   const [catBreeds, setCatBreeds] = useState<CatBreed[]>([]);
