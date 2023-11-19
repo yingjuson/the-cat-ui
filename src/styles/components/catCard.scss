@@ -2,8 +2,9 @@
   height: 18em;
 
   &__img {
-    object-fit: cover;
     height: 70%;
+    object-fit: cover;
+    object-position: 50% 10%;
   }
 
   &__body {
