@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getCatImage } from '../services/catBreedService';
+import { getCatImage } from '../requests/catRequests';
 import { CatImage } from '../types/cat.types';
 import axios from 'axios';
 

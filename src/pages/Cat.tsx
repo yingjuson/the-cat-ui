@@ -4,7 +4,7 @@ import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import axios from 'axios';
-import { getCatBreedInfoByImageId } from '../services/catBreedService';
+import { getCatBreedInfoByImageId } from '../requests/catRequests';
 import { useParams, useNavigate } from 'react-router-dom';
 import { CatBreed } from '../types/cat.types';
 

@@ -2,7 +2,7 @@ import { FC, ChangeEvent, useEffect, useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { getBreeds } from '../services/catBreedService';
+import { getBreeds } from '../requests/catRequests';
 import { CatBreed } from '../types/cat.types';
 import axios from 'axios';
 import CatCard from '../components/CatCard';
